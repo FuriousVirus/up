@@ -28,7 +28,7 @@ DIM = "\033[2m"
 RESET = "\033[0m"
 SEPARATOR = f"{'-' * 50}"
 
-idle = False
+idle = args.idle
 if not (args.repo or args.aur or args.flatpak):
     # -------------------------
     #     UPDATE SELECTION
@@ -77,24 +77,23 @@ if not (args.repo or args.aur or args.flatpak):
             break
         elif update == "6":
             exit(0)
-
-    # -------------------------
-    #    IDLE MODE SELECTION
-    # -------------------------
-    print("Idle mode? (Will not ask for confirmation)")
-    while True:
-        answer = input("[y/N] ").strip().lower()
-        if answer in ("y", "yes"):
-            idle = True
-            break
-        elif answer in ("n", "no", ""):
-            idle = False
-            break
+    if not args.idle:
+        # -------------------------
+        #    IDLE MODE SELECTION
+        # -------------------------
+        print("Idle mode? (Will not ask for confirmation)")
+        while True:
+            answer = input("[y/N] ").strip().lower()
+            if answer in ("y", "yes"):
+                idle = True
+                break
+            elif answer in ("n", "no", ""):
+                idle = False
+                break
 else:
     repo = args.repo
     aur = args.aur
     flatpak = args.flatpak
-    idle = args.idle
     print(f"{GREEN}==> Arguments detected - Skipping menu{RESET}")
 
 
