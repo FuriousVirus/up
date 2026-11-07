@@ -13,21 +13,28 @@ args = parser.parse_args()
 
 
 GREEN = "\033[32m"
+CYAN = "\033[36m"
+YELLOW = "\033[33m"
+BOLD = "\033[1m"
+DIM = "\033[2m"
 RESET = "\033[0m"
-SEPARATOR = f"{GREEN}{'-' * 100}{RESET}"
+SEPARATOR = f"{'-' * 50}"
 
 idle = False
 if not (args.repo or args.aur or args.flatpak):
     # -------------------------
     #     UPDATE SELECTION
     # -------------------------
-    print("Select what to update")
-    print("1) Everything (Repo - AUR - Flatpak)")
-    print("2) Group  - Repo - AUR")
-    print("3) Single - Repo")
-    print("4) Single - AUR")
-    print("5) Single - Flatpak only")
-    print("6) Exit")
+    print(SEPARATOR)
+    print(f"{BOLD}  Select what to update{RESET}")
+    print(SEPARATOR)
+    print(f"  {CYAN}1){RESET} Everything      {DIM}Repo - AUR - Flatpak{RESET}")
+    print(f"  {CYAN}2){RESET} Arch only       {DIM}Repo - AUR{RESET}")
+    print(f"  {CYAN}3){RESET} Repo only")
+    print(f"  {CYAN}4){RESET} AUR only")
+    print(f"  {CYAN}5){RESET} Flatpak only")
+    print(f"  {CYAN}6){RESET} Exit")
+    print(SEPARATOR)
 
     while True:
         update = input("Select [1-6] ").strip()
@@ -87,7 +94,7 @@ else:
 #       UPDATE LOGIC
 # -------------------------
 
-print(SEPARATOR)
+print(f"{GREEN}{SEPARATOR}{RESET}")
 if repo:
     # -------------------------
     #       REPO UPGRADE
@@ -97,7 +104,7 @@ if repo:
         subprocess.run(["sudo", "pacman", "-Syu", "--noconfirm"])
     else:
         subprocess.run(["sudo", "pacman", "-Syu"])
-    print(SEPARATOR)
+    print(f"{GREEN}{SEPARATOR}{RESET}")
 
 if aur:
     # -------------------------
@@ -108,7 +115,7 @@ if aur:
         subprocess.run(["paru", "-Sua", "--noconfirm"])
     else:
         subprocess.run(["paru", "-Sua"])
-    print(SEPARATOR)
+    print(f"{GREEN}{SEPARATOR}{RESET}")
 
 if flatpak:
     # -------------------------
@@ -119,4 +126,4 @@ if flatpak:
         subprocess.run(["flatpak", "update", "-y"])
     else:
         subprocess.run(["flatpak", "update"])
-    print(SEPARATOR)
+    print(f"{GREEN}{SEPARATOR}{RESET}")
